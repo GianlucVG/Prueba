@@ -1,0 +1,74 @@
+.container {
+  padding: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.table td button {
+  padding: 5px 10px;
+  margin-right: 5px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.table td button:last-child {
+  background-color: #c73636;
+}
+.new-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: #45a049; /* Un verde ligeramente más oscuro */
+    color: white;
+  }
+}
+.edit{
+  width: 20px;
+  height: 20px;
+  background-image: url("/assets/svg/edit.svg");
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.trash{
+  width: 20px;
+  height: 20px;
+  background-image: url("/assets/svg/trash.svg") ;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.icons{
+  display: flex;
+  justify-content: space-evenly;
+}

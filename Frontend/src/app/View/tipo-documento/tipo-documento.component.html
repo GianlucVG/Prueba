@@ -1,0 +1,48 @@
+<app-header></app-header>
+<div class="container">
+  <h1>Tipos de Documento</h1>
+  <button class="new-button" (click)="openModal()">
+    Crear Nuevo Tipo de Documento
+  </button>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Código</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let documento of tipoDocumentos">
+        <td>{{ documento.id_tipo_documento }}</td>
+        <td>{{ documento.codigo }}</td>
+        <td>{{ documento.nombre }}</td>
+        <td>{{ documento.descripcion }}</td>
+        <td>{{ documento.estado === 1 ? "Activo" : "Inactivo" }}</td>
+        <td>
+          <div class="icons">
+            <div title="Editar" (click)="editTipoDocumento(documento)" class="edit"></div>
+            <div title="Eliminar"
+              (click)="deleteTipoDocumento(documento.id_tipo_documento)"
+              class="trash"
+            ></div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-tipo-documento-form
+  *ngIf="showModal"
+  [isEditing]="isEditing"
+  [editingId]="editingId"
+  [tipoDocumento]="tipoDocumento"
+  (closeModal)="closeModal()"
+  (saveTipoDocumentoEvent)="handleSaveTipoDocumento($event)"
+>
+</app-tipo-documento-form>

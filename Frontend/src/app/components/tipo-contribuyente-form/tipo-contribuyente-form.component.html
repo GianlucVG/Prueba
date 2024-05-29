@@ -1,0 +1,32 @@
+<div class="modal">
+  <div class="modal-content">
+    <span class="close-button" (click)="onCloseModal()">&times;</span>
+    <h2>{{ isEditing ? 'Editar Tipo de Contribuyente' : 'Crear Nuevo Tipo de Contribuyente' }}</h2>
+    <form (ngSubmit)="saveTipoContribuyente()">
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input
+          type="text"
+          id="nombre"
+          [(ngModel)]="tipoContribuyente.nombre"
+          name="nombre"
+          required
+        />
+      </div>
+      <div class="estado form-group">
+        <label for="estado">Estado:</label>
+        <input
+          class="checkbox"
+          type="checkbox"
+          id="estado"
+          [(ngModel)]="tipoContribuyente.estado"
+          name="estado"
+        />
+      </div>
+      <div class="buttons">
+        <button type="submit">{{ isEditing ? 'Actualizar' : 'Crear' }}</button>
+        <button class="cancel-button" type="button" (click)="onCloseModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

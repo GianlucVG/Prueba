@@ -1,0 +1,89 @@
+<div class="modal">
+  <div class="modal-content">
+    <span class="close-button" (click)="closeModal.emit()">&times;</span>
+    <h2>{{ isEditing ? 'Editar Entidad' : 'Crear Nueva Entidad' }}</h2>
+    <form (ngSubmit)="saveEntidad()">
+      <div class="form-group">
+        <label for="id_tipo_documento">Tipo Documento:</label>
+        <input
+          type="text"
+          id="id_tipo_documento"
+          [(ngModel)]="entidad.id_tipo_documento"
+          name="id_tipo_documento"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="nro_documento">Nro Documento:</label>
+        <input
+          type="text"
+          id="nro_documento"
+          [(ngModel)]="entidad.nro_documento"
+          name="nro_documento"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="razon_social">Razon Social:</label>
+        <input
+          type="text"
+          id="razon_social"
+          [(ngModel)]="entidad.razon_social"
+          name="razon_social"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="nombre_comercial">Nombre Comercial:</label>
+        <input
+          type="text"
+          id="nombre_comercial"
+          [(ngModel)]="entidad.nombre_comercial"
+          name="nombre_comercial"
+        />
+      </div>
+      <div class="form-group">
+        <label for="id_tipo_contribuyente">Tipo Contribuyente:</label>
+        <input
+          type="text"
+          id="id_tipo_contribuyente"
+          [(ngModel)]="entidad.id_tipo_contribuyente"
+          name="id_tipo_contribuyente"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="direccion">Dirección:</label>
+        <input
+          type="text"
+          id="direccion"
+          [(ngModel)]="entidad.direccion"
+          name="direccion"
+        />
+      </div>
+      <div class="form-group">
+        <label for="telefono">Teléfono:</label>
+        <input
+          type="text"
+          id="telefono"
+          [(ngModel)]="entidad.telefono"
+          name="telefono"
+        />
+      </div>
+      <div class="estado form-group">
+        <label for="estado">Estado:</label>
+        <input
+          class="checkbox"
+          type="checkbox"
+          id="estado"
+          [(ngModel)]="entidad.estado"
+          name="estado"
+        />
+      </div>
+      <div class="buttons">
+        <button type="submit">{{ isEditing ? 'Actualizar' : 'Crear' }}</button>
+        <button class="Cancelar" type="button" (click)="onCloseModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

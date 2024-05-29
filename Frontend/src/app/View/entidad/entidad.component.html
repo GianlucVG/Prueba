@@ -1,0 +1,47 @@
+<app-header></app-header>
+
+<div class="container">
+  <h1>Entidades</h1>
+  <button class="new-button" (click)="openModal()">Crear Nueva Entidad</button>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tipo Documento</th>
+        <th>Nro Documento</th>
+        <th>Razon Social</th>
+        <th>Nombre Comercial</th>
+        <th>Tipo Contribuyente</th>
+        <th>Dirección</th>
+        <th>Teléfono</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entidad of entidades">
+        <td>{{ entidad.id_entidad }}</td>
+        <td>{{ entidad.id_tipo_documento }}</td>
+        <td>{{ entidad.nro_documento }}</td>
+        <td>{{ entidad.razon_social }}</td>
+        <td>{{ entidad.nombre_comercial }}</td>
+        <td>{{ entidad.id_tipo_contribuyente }}</td>
+        <td>{{ entidad.direccion }}</td>
+        <td>{{ entidad.telefono }}</td>
+        <td>{{ entidad.estado ? 'Activo' : 'Inactivo' }}</td>
+        <td>
+          <div class="icons">
+            <div title="Editar" (click)="editEntidad(entidad)" class="edit"></div>
+            <div title="Eliminar"
+            (click)="deleteEntidad(entidad.id_entidad)"
+              class="trash"
+            ></div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-entity-form *ngIf="showModal" [isEditing]="isEditing" [editingId]="editingId" [entidad]="entidad" (closeModal)="closeModal()" (createEntidadEvent)="handleCreateEntidad($event)" (updateEntidadEvent)="handleUpdateEntidad($event)"></app-entity-form>

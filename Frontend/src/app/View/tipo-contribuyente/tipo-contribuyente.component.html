@@ -1,0 +1,41 @@
+<app-header></app-header>
+<div class="tipo-contribuyente-container">
+  <h1>Tipos de Contribuyente</h1>
+  <button class="new-button" (click)="openModal()">Crear Nuevo Tipo de Contribuyente</button>
+
+  <table class="tipo-contribuyente-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let contribuyente of tipoContribuyentes">
+        <td>{{ contribuyente.id_tipo_contribuyente }}</td>
+        <td>{{ contribuyente.nombre }}</td>
+        <td>{{ contribuyente.estado === 1 ? 'Activo' : 'Inactivo' }}</td>
+        <td>
+          <div class="icons">
+            <div title="Editar" (click)="editTipoContribuyente(contribuyente)" class="edit"></div>
+            <div title="Eliminar"
+            (click)="deleteTipoContribuyente(contribuyente.id_tipo_contribuyente)"
+              class="trash"
+            ></div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-tipo-contribuyente-form 
+  *ngIf="showModal" 
+  [isEditing]="isEditing" 
+  [editingId]="editingId" 
+  [tipoContribuyente]="tipoContribuyente" 
+  (closeModal)="closeModal()" 
+  (refreshList)="handleSaveTipoContribuyente($event)">
+</app-tipo-contribuyente-form>
