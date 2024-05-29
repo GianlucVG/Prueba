@@ -14,15 +14,15 @@ import { TipoDocumentoFormComponent } from '../../components/tipo-documento-form
 })
 export class TipoDocumentoComponent implements OnInit {
   tipoDocumentos: any[] = [];
-  tipoDocumento = {
+  showModal = false;
+  isEditing = false;
+  editingId: number | null = null;
+  tipoDocumento: any = {
     codigo: '',
     nombre: '',
     descripcion: '',
     estado: true
   };
-  isEditing = false;
-  editingId: number | null = null;
-  showModal = false;
 
   constructor(private tipoDocumentoService: TipoDocumentoService) {}
 
@@ -43,11 +43,22 @@ export class TipoDocumentoComponent implements OnInit {
 
   openModal(): void {
     this.showModal = true;
-    this.resetForm();
   }
 
   closeModal(): void {
     this.showModal = false;
+    this.resetForm();
+  }
+
+  resetForm(): void {
+    this.tipoDocumento = {
+      codigo: '',
+      nombre: '',
+      descripcion: '',
+      estado: true
+    };
+    this.isEditing = false;
+    this.editingId = null;
   }
 
   handleSaveTipoDocumento(data: any): void {
@@ -60,8 +71,7 @@ export class TipoDocumentoComponent implements OnInit {
 
   createTipoDocumento(tipoDocumento: any): void {
     this.tipoDocumentoService.create(tipoDocumento).subscribe(
-      response => {
-        console.log(response.message); // Debería imprimir "Tipo de documento creado exitosamente"
+      () => {
         this.loadTipoDocumentos();
         this.resetForm();
         this.closeModal();
@@ -74,8 +84,7 @@ export class TipoDocumentoComponent implements OnInit {
 
   updateTipoDocumento(id: number, tipoDocumento: any): void {
     this.tipoDocumentoService.update(id, tipoDocumento).subscribe(
-      response => {
-        console.log(response.message); // Debería imprimir "Tipo de documento actualizado exitosamente"
+      () => {
         this.loadTipoDocumentos();
         this.resetForm();
         this.closeModal();
@@ -85,35 +94,22 @@ export class TipoDocumentoComponent implements OnInit {
       }
     );
   }
-  
+
+  deleteTipoDocumento(id: number): void {
+    this.tipoDocumentoService.delete(id).subscribe(
+      () => {
+        this.loadTipoDocumentos();
+      },
+      error => {
+        console.error('Error:', error);
+      }
+    );
+  }
 
   editTipoDocumento(tipoDocumento: any): void {
     this.isEditing = true;
     this.editingId = tipoDocumento.id_tipo_documento;
     this.tipoDocumento = { ...tipoDocumento, estado: tipoDocumento.estado === 1 };
-    this.showModal = true;
-  }
-
-  deleteTipoDocumento(id: number): void {
-    this.tipoDocumentoService.delete(id).subscribe(
-      (response) => {
-        console.log(response.message);
-        this.loadTipoDocumentos();
-      },
-      (error) => {
-        console.error('Error:', error);
-      }
-    );
-  }
-  
-  resetForm(): void {
-    this.tipoDocumento = {
-      codigo: '',
-      nombre: '',
-      descripcion: '',
-      estado: true
-    };
-    this.isEditing = false;
-    this.editingId = null;
+    this.openModal();
   }
 }

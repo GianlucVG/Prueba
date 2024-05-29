@@ -87,7 +87,7 @@ describe('Entidad API', () => {
 
   it('should delete an entidad', async () => {
     const res = await request(app)
-      .delete('/api/entidad/1')
+      .delete('/api/entidad/64')
       .set('x-access-token', token);
     expect(res.statusCode).to.equal(200);
   });

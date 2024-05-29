@@ -48,6 +48,15 @@ export class TipoContribuyenteComponent implements OnInit {
     this.resetForm();
   }
 
+  resetForm(): void {
+    this.tipoContribuyente = {
+      nombre: '',
+      estado: true
+    };
+    this.isEditing = false;
+    this.editingId = null;
+  }
+
   handleSaveTipoContribuyente(data: any): void {
     if (data.isEditing) {
       this.updateTipoContribuyente(data.id, data.tipoContribuyente);
@@ -60,6 +69,7 @@ export class TipoContribuyenteComponent implements OnInit {
     this.tipoContribuyenteService.create(tipoContribuyente).subscribe(
       () => {
         this.loadTipoContribuyentes();
+        this.resetForm();
         this.closeModal();
       },
       error => {
@@ -72,19 +82,13 @@ export class TipoContribuyenteComponent implements OnInit {
     this.tipoContribuyenteService.update(id, tipoContribuyente).subscribe(
       () => {
         this.loadTipoContribuyentes();
+        this.resetForm();
         this.closeModal();
       },
       error => {
         console.error('Error:', error);
       }
     );
-  }
-
-  editTipoContribuyente(tipoContribuyente: any): void {
-    this.isEditing = true;
-    this.editingId = tipoContribuyente.id_tipo_contribuyente;
-    this.tipoContribuyente = { ...tipoContribuyente, estado: tipoContribuyente.estado === 1 };
-    this.openModal();
   }
 
   deleteTipoContribuyente(id: number): void {
@@ -98,12 +102,10 @@ export class TipoContribuyenteComponent implements OnInit {
     );
   }
 
-  resetForm(): void {
-    this.tipoContribuyente = {
-      nombre: '',
-      estado: true
-    };
-    this.isEditing = false;
-    this.editingId = null;
+  editTipoContribuyente(tipoContribuyente: any): void {
+    this.isEditing = true;
+    this.editingId = tipoContribuyente.id_tipo_contribuyente;
+    this.tipoContribuyente = { ...tipoContribuyente, estado: tipoContribuyente.estado === 1 };
+    this.openModal();
   }
 }
