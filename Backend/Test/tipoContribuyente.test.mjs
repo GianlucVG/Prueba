@@ -72,10 +72,9 @@ describe('TipoContribuyente API', () => {
       .send(updatedTipoContribuyente);
     expect(res.statusCode).to.equal(200);
   });
-
-  it('should delete a tipoContribuyente', async () => {
+  it('should delete an tipoContribuyente', async () => {
     const res = await request(app)
-      .delete('/api/tipoContribuyente/1')
+      .delete('/api/tipoContribuyente/5')
       .set('x-access-token', token);
     expect(res.statusCode).to.equal(200);
   });

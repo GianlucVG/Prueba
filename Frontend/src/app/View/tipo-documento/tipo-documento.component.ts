@@ -96,15 +96,16 @@ export class TipoDocumentoComponent implements OnInit {
 
   deleteTipoDocumento(id: number): void {
     this.tipoDocumentoService.delete(id).subscribe(
-      () => {
+      (response) => {
+        console.log(response.message);
         this.loadTipoDocumentos();
       },
-      error => {
+      (error) => {
         console.error('Error:', error);
       }
     );
   }
-
+  
   resetForm(): void {
     this.tipoDocumento = {
       codigo: '',

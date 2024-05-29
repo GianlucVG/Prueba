@@ -76,10 +76,10 @@ describe('TipoDocumento API', () => {
       .send(updatedTipoDocumento);
     expect(res.statusCode).to.equal(200);
   });
-
-  it('should delete a tipoDocumento', async () => {
+  
+  it('should delete an tipoDocumento', async () => {
     const res = await request(app)
-      .delete('/api/tipoDocumento/1')
+      .delete('/api/tipoDocumento/40')
       .set('x-access-token', token);
     expect(res.statusCode).to.equal(200);
   });

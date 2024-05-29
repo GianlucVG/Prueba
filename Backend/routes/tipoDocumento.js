@@ -65,10 +65,9 @@ router.delete('/:id', verifyToken, async (req, res) => {
   try {
     const query = 'DELETE FROM tb_tipo_documento WHERE id_tipo_documento = ?';
     const [results] = await db.query(query, [id]);
-    res.status(200).send('Tipo de documento eliminado exitosamente');
+    res.status(200).json({ message: 'Tipo de documento eliminado exitosamente' });
   } catch (err) {
-    console.error(err);
-    res.status(500).send('Error on the server.');
+    res.status(500).json({ error: 'Error en el servidor' });
   }
 });
 
