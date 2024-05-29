@@ -15,15 +15,15 @@ import { HeaderComponent } from "../../components/header/header.component"; // A
 export class LoginComponent {
   email: string = '';
   password: string = '';
-
-  constructor(private authService: AuthService, private router: Router) {} // Inyectar Router
+  
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
     const credentials = { email: this.email, password: this.password };
     this.authService.login(credentials).subscribe(response => {
       if (response && response.token) {
-        localStorage.setItem('token', response.token); // Guardar el token en localStorage
-        this.router.navigate(['/entidades']); // Redirigir a la vista de entidades
+        localStorage.setItem('token', response.token);
+        this.router.navigate(['/entidades']);
       } else {
         console.error('Login failed: No token received');
       }

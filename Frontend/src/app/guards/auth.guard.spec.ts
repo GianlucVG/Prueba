@@ -1,46 +1,36 @@
 import { TestBed } from '@angular/core/testing';
-import { CanActivateFn } from '@angular/router';
-import { Router } from '@angular/router';
+import { AuthGuard } from './auth.guard';
+import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from '../Service/auth.service';
-import { authGuard } from './auth.guard';
+import { Router } from '@angular/router';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 
-describe('authGuard', () => {
-  let executeGuard: CanActivateFn;
-  let authService: jasmine.SpyObj<AuthService>;
-  let router: jasmine.SpyObj<Router>;
+describe('AuthGuard', () => {
+  let authGuard: AuthGuard;
+  let authService: AuthService;
+  let router: Router;
 
   beforeEach(() => {
-    const authServiceSpy = jasmine.createSpyObj('AuthService', ['isLoggedIn']);
-    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-
     TestBed.configureTestingModule({
-      providers: [
-        { provide: AuthService, useValue: authServiceSpy },
-        { provide: Router, useValue: routerSpy }
-      ]
+      imports: [RouterTestingModule, HttpClientTestingModule],
+      providers: [AuthGuard, AuthService]
     });
 
-    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
-    router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
-
-    executeGuard = (...guardParameters) => 
-        TestBed.runInInjectionContext(() => authGuard(...guardParameters));
+    authGuard = TestBed.inject(AuthGuard);
+    authService = TestBed.inject(AuthService);
+    router = TestBed.inject(Router);
   });
 
-  it('should allow the authenticated user to access the route', () => {
-    authService.isLoggedIn.and.returnValue(true);
-
-    const result = executeGuard({} as any, {} as any);
-
-    expect(result).toBeTrue();
+  it('should allow the authenticated user to access app', () => {
+    spyOn(authService, 'isAuthenticated').and.returnValue(true);
+    expect(authGuard.canActivate()).toBe(true);
   });
 
-  it('should not allow the unauthenticated user to access the route', () => {
-    authService.isLoggedIn.and.returnValue(false);
-
-    const result = executeGuard({} as any, {} as any);
-
-    expect(result).toBeFalse();
+  it('should redirect an unauthenticated user to the login route', () => {
+    spyOn(authService, 'isAuthenticated').and.returnValue(false);
+    spyOn(router, 'navigate');
+    expect(authGuard.canActivate()).toBe(false);
     expect(router.navigate).toHaveBeenCalledWith(['/login']);
   });
 });
