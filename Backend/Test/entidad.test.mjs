@@ -51,25 +51,7 @@ describe('Entidad API', () => {
 
   it('should create a new entidad', async () => {
     const newEntidad = {
-      id_tipo_documento: 1,
-      nro_documento: '999999999999999999999', // Cambiar a un número único
-      razon_social: 'Test Entidad',
-      nombre_comercial: 'Test Comercial',
-      id_tipo_contribuyente: 1,
-      direccion: 'Test Address',
-      telefono: '123456789',
-      estado: true
-    };
-    const res = await request(app)
-      .post('/api/entidad')
-      .set('x-access-token', token)
-      .send(newEntidad);
-    expect(res.statusCode).to.equal(201);
-  });
-
-  it('should create a new entidad', async () => {
-    const newEntidad = {
-      id_tipo_documento: 1,
+      id_tipo_documento: 3,
       nro_documento: 'unique123456', // Asegúrate de que este número sea único
       razon_social: 'Test Entidad',
       nombre_comercial: 'Test Comercial',

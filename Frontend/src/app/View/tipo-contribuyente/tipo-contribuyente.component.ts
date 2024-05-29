@@ -4,13 +4,14 @@ import { TipoContribuyenteService } from '../../Service/tipo-contribuyente/tipo-
 import { HeaderComponent } from "../../components/header/header.component";
 import { FormsModule } from '@angular/forms';
 import { TipoContribuyenteFormComponent } from '../../components/tipo-contribuyente-form/tipo-contribuyente-form.component';
+import { AlertComponent } from "../../components/alert/alert.component";
 
 @Component({
   selector: 'app-tipo-contribuyente',
   standalone: true,
   templateUrl: './tipo-contribuyente.component.html',
   styleUrls: ['./tipo-contribuyente.component.scss'],
-  imports: [CommonModule, HeaderComponent, FormsModule, TipoContribuyenteFormComponent]
+  imports: [CommonModule, HeaderComponent, FormsModule, TipoContribuyenteFormComponent, AlertComponent]
 })
 export class TipoContribuyenteComponent implements OnInit {
   tipoContribuyentes: any[] = [];
@@ -21,6 +22,8 @@ export class TipoContribuyenteComponent implements OnInit {
     nombre: '',
     estado: true
   };
+  message: string | null = null;
+  messageType: 'success' | 'error' | null = null;
 
   constructor(private tipoContribuyenteService: TipoContribuyenteService) {}
 
@@ -71,9 +74,11 @@ export class TipoContribuyenteComponent implements OnInit {
         this.loadTipoContribuyentes();
         this.resetForm();
         this.closeModal();
+        this.showMessage('Tipo de contribuyente creado con éxito', 'success');
       },
       error => {
         console.error('Error:', error);
+        this.showMessage('Error al crear el tipo de contribuyente', 'error');
       }
     );
   }
@@ -84,9 +89,11 @@ export class TipoContribuyenteComponent implements OnInit {
         this.loadTipoContribuyentes();
         this.resetForm();
         this.closeModal();
+        this.showMessage('Tipo de contribuyente actualizado con éxito', 'success');
       },
       error => {
         console.error('Error:', error);
+        this.showMessage('Error al actualizar el tipo de contribuyente', 'error');
       }
     );
   }
@@ -95,9 +102,11 @@ export class TipoContribuyenteComponent implements OnInit {
     this.tipoContribuyenteService.delete(id).subscribe(
       () => {
         this.loadTipoContribuyentes();
+        this.showMessage('Tipo de contribuyente eliminado con éxito', 'success');
       },
       error => {
         console.error('Error:', error);
+        this.showMessage('Error al eliminar el tipo de contribuyente', 'error');
       }
     );
   }
@@ -107,5 +116,23 @@ export class TipoContribuyenteComponent implements OnInit {
     this.editingId = tipoContribuyente.id_tipo_contribuyente;
     this.tipoContribuyente = { ...tipoContribuyente, estado: tipoContribuyente.estado === 1 };
     this.openModal();
+  }
+
+  handleMessage(event: { message: string, type: 'success' | 'error' }): void {
+    this.message = event.message;
+    this.messageType = event.type;
+    setTimeout(() => {
+      this.message = null;
+      this.messageType = null;
+    }, 3000);
+  }
+
+  showMessage(message: string, type: 'success' | 'error'): void {
+    this.message = message;
+    this.messageType = type;
+    setTimeout(() => {
+      this.message = null;
+      this.messageType = null;
+    }, 3000);
   }
 }

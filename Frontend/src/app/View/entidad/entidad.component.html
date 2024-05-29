@@ -3,7 +3,7 @@
 <div class="container">
   <h1>Entidades</h1>
   <button class="new-button" (click)="openModal()">Crear Nueva Entidad</button>
-
+  <app-alert [message]="message" [type]="messageType"></app-alert>
   <table class="table">
     <thead>
       <tr>
@@ -44,4 +44,13 @@
   </table>
 </div>
 
-<app-entity-form *ngIf="showModal" [isEditing]="isEditing" [editingId]="editingId" [entidad]="entidad" (closeModal)="closeModal()" (createEntidadEvent)="handleCreateEntidad($event)" (updateEntidadEvent)="handleUpdateEntidad($event)"></app-entity-form>
+<app-entity-form 
+  *ngIf="showModal" 
+  [isEditing]="isEditing" 
+  [editingId]="editingId" 
+  [entidad]="entidad" 
+  (closeModal)="closeModal()" 
+  (createEntidadEvent)="handleCreateEntidad($event)" 
+  (updateEntidadEvent)="handleUpdateEntidad($event)" 
+  (messageEvent)="handleMessage($event)">
+</app-entity-form>

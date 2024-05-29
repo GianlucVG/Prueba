@@ -26,6 +26,7 @@ export class EntityFormComponent {
   @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
   @Output() createEntidadEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() updateEntidadEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() messageEvent: EventEmitter<{ message: string, type: 'success' | 'error' }> = new EventEmitter<{ message: string, type: 'success' | 'error' }>();
 
   resetForm(): void {
     this.entidad = {
@@ -43,10 +44,15 @@ export class EntityFormComponent {
   }
 
   saveEntidad(): void {
-    if (this.isEditing) {
-      this.updateEntidad();
-    } else {
-      this.createEntidad();
+    try {
+      if (this.isEditing) {
+        this.updateEntidad();
+      } else {
+        this.createEntidad();
+      }
+      this.messageEvent.emit({ message: 'Operación realizada con éxito', type: 'success' });
+    } catch (error) {
+      this.messageEvent.emit({ message: 'Ocurrió un error, inténtelo de nuevo', type: 'error' });
     }
   }
 

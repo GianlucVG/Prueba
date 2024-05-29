@@ -4,15 +4,19 @@ import { FormsModule } from '@angular/forms';
 import { EntidadService } from '../../Service/entidad/entidad.service';
 import { HeaderComponent } from '../../components/header/header.component';
 import { EntityFormComponent } from '../../components/entity-form/entity-form.component';
+import { AlertComponent } from "../../components/alert/alert.component";
 
 @Component({
-  selector: 'app-entidad',
-  standalone: true,
-  templateUrl: './entidad.component.html',
-  styleUrls: ['./entidad.component.scss'],
-  imports: [CommonModule, FormsModule, HeaderComponent, EntityFormComponent]
+    selector: 'app-entidad',
+    standalone: true,
+    templateUrl: './entidad.component.html',
+    styleUrls: ['./entidad.component.scss'],
+    imports: [CommonModule, FormsModule, HeaderComponent, EntityFormComponent, AlertComponent]
 })
 export class EntidadComponent implements OnInit {
+message: string | null = null;
+  messageType: 'success' | 'error' | null = null;
+  
   entidades: any[] = [];
   entidad = {
     id_tipo_documento: '',
@@ -110,5 +114,14 @@ export class EntidadComponent implements OnInit {
     };
     this.isEditing = false;
     this.editingId = null;
+  }
+
+  handleMessage(event: { message: string, type: 'success' | 'error' }): void {
+    this.message = event.message;
+    this.messageType = event.type;
+    setTimeout(() => {
+      this.message = null;
+      this.messageType = null;
+    }, 3000);
   }
 }

@@ -4,6 +4,7 @@
   <button class="new-button" (click)="openModal()">
     Crear Nuevo Tipo de Documento
   </button>
+  <app-alert [message]="message" [type]="messageType"></app-alert>
 
   <table class="table">
     <thead>
@@ -26,10 +27,7 @@
         <td>
           <div class="icons">
             <div title="Editar" (click)="editTipoDocumento(documento)" class="edit"></div>
-            <div title="Eliminar"
-              (click)="deleteTipoDocumento(documento.id_tipo_documento)"
-              class="trash"
-            ></div>
+            <div title="Eliminar" (click)="deleteTipoDocumento(documento.id_tipo_documento)" class="trash"></div>
           </div>
         </td>
       </tr>
@@ -44,5 +42,6 @@
   [tipoDocumento]="tipoDocumento"
   (closeModal)="closeModal()"
   (saveTipoDocumentoEvent)="handleSaveTipoDocumento($event)"
+  (messageEvent)="handleMessage($event)"
 >
 </app-tipo-documento-form>

@@ -2,6 +2,7 @@
 <div class="tipo-contribuyente-container">
   <h1>Tipos de Contribuyente</h1>
   <button class="new-button" (click)="openModal()">Crear Nuevo Tipo de Contribuyente</button>
+  <app-alert [message]="message" [type]="messageType"></app-alert>
 
   <table class="tipo-contribuyente-table">
     <thead>
@@ -20,10 +21,7 @@
         <td>
           <div class="icons">
             <div title="Editar" (click)="editTipoContribuyente(contribuyente)" class="edit"></div>
-            <div title="Eliminar"
-            (click)="deleteTipoContribuyente(contribuyente.id_tipo_contribuyente)"
-              class="trash"
-            ></div>
+            <div title="Eliminar" (click)="deleteTipoContribuyente(contribuyente.id_tipo_contribuyente)" class="trash"></div>
           </div>
         </td>
       </tr>
@@ -37,5 +35,6 @@
   [editingId]="editingId" 
   [tipoContribuyente]="tipoContribuyente" 
   (closeModal)="closeModal()" 
-  (refreshList)="handleSaveTipoContribuyente($event)">
+  (refreshList)="handleSaveTipoContribuyente($event)" 
+  (messageEvent)="handleMessage($event)">
 </app-tipo-contribuyente-form>

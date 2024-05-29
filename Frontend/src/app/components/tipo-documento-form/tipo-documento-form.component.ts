@@ -20,6 +20,7 @@ export class TipoDocumentoFormComponent {
   @Input() editingId: number | null = null;
   @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
   @Output() saveTipoDocumentoEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() messageEvent: EventEmitter<{ message: string, type: 'success' | 'error' }> = new EventEmitter<{ message: string, type: 'success' | 'error' }>();
 
   resetForm(): void {
     this.tipoDocumento = {
@@ -33,12 +34,17 @@ export class TipoDocumentoFormComponent {
   }
 
   saveTipoDocumento(): void {
-    const data = {
-      id: this.editingId,
-      tipoDocumento: this.tipoDocumento,
-      isEditing: this.isEditing
-    };
-    this.saveTipoDocumentoEvent.emit(data);
+    try {
+      const data = {
+        id: this.editingId,
+        tipoDocumento: this.tipoDocumento,
+        isEditing: this.isEditing
+      };
+      this.saveTipoDocumentoEvent.emit(data);
+      this.messageEvent.emit({ message: 'Operación realizada con éxito', type: 'success' });
+    } catch (error) {
+      this.messageEvent.emit({ message: 'Ocurrió un error, inténtelo de nuevo', type: 'error' });
+    }
     this.resetForm();
     this.closeModal.emit();
   }

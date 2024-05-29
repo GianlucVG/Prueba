@@ -18,14 +18,20 @@ export class TipoContribuyenteFormComponent {
   @Input() editingId: number | null = null;
   @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
   @Output() refreshList: EventEmitter<any> = new EventEmitter<any>();
+  @Output() messageEvent: EventEmitter<{ message: string, type: 'success' | 'error' }> = new EventEmitter<{ message: string, type: 'success' | 'error' }>();
 
   saveTipoContribuyente(): void {
-    const data = {
-      id: this.editingId,
-      tipoContribuyente: this.tipoContribuyente,
-      isEditing: this.isEditing
-    };
-    this.refreshList.emit(data);
+    try {
+      const data = {
+        id: this.editingId,
+        tipoContribuyente: this.tipoContribuyente,
+        isEditing: this.isEditing
+      };
+      this.refreshList.emit(data);
+      this.messageEvent.emit({ message: 'Operación realizada con éxito', type: 'success' });
+    } catch (error) {
+      this.messageEvent.emit({ message: 'Ocurrió un error, inténtelo de nuevo', type: 'error' });
+    }
   }
 
   onCloseModal(): void {

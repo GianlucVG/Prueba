@@ -4,13 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { TipoDocumentoService } from '../../Service/tipo-documento/tipo-documento.service';
 import { HeaderComponent } from "../../components/header/header.component";
 import { TipoDocumentoFormComponent } from '../../components/tipo-documento-form/tipo-documento-form.component';
+import { AlertComponent } from "../../components/alert/alert.component";
 
 @Component({
   selector: 'app-tipo-documento',
   standalone: true,
   templateUrl: './tipo-documento.component.html',
   styleUrls: ['./tipo-documento.component.scss'],
-  imports: [CommonModule, FormsModule, HeaderComponent, TipoDocumentoFormComponent]
+  imports: [CommonModule, FormsModule, HeaderComponent, TipoDocumentoFormComponent, AlertComponent]
 })
 export class TipoDocumentoComponent implements OnInit {
   tipoDocumentos: any[] = [];
@@ -23,6 +24,8 @@ export class TipoDocumentoComponent implements OnInit {
     descripcion: '',
     estado: true
   };
+  message: string | null = null;
+  messageType: 'success' | 'error' | null = null;
 
   constructor(private tipoDocumentoService: TipoDocumentoService) {}
 
@@ -37,6 +40,7 @@ export class TipoDocumentoComponent implements OnInit {
       },
       error => {
         console.error('Error:', error);
+        this.showMessage('Error al cargar los tipos de documentos', 'error');
       }
     );
   }
@@ -75,9 +79,11 @@ export class TipoDocumentoComponent implements OnInit {
         this.loadTipoDocumentos();
         this.resetForm();
         this.closeModal();
+        this.showMessage('Tipo de documento creado con éxito', 'success');
       },
       error => {
         console.error('Error:', error);
+        this.showMessage('Error al crear el tipo de documento', 'error');
       }
     );
   }
@@ -88,9 +94,11 @@ export class TipoDocumentoComponent implements OnInit {
         this.loadTipoDocumentos();
         this.resetForm();
         this.closeModal();
+        this.showMessage('Tipo de documento actualizado con éxito', 'success');
       },
       error => {
         console.error('Error:', error);
+        this.showMessage('Error al actualizar el tipo de documento', 'error');
       }
     );
   }
@@ -99,9 +107,11 @@ export class TipoDocumentoComponent implements OnInit {
     this.tipoDocumentoService.delete(id).subscribe(
       () => {
         this.loadTipoDocumentos();
+        this.showMessage('Tipo de documento eliminado con éxito', 'success');
       },
       error => {
         console.error('Error:', error);
+        this.showMessage('Error al eliminar el tipo de documento', 'error');
       }
     );
   }
@@ -111,5 +121,23 @@ export class TipoDocumentoComponent implements OnInit {
     this.editingId = tipoDocumento.id_tipo_documento;
     this.tipoDocumento = { ...tipoDocumento, estado: tipoDocumento.estado === 1 };
     this.openModal();
+  }
+
+  handleMessage(event: { message: string, type: 'success' | 'error' }): void {
+    this.message = event.message;
+    this.messageType = event.type;
+    setTimeout(() => {
+      this.message = null;
+      this.messageType = null;
+    }, 3000);
+  }
+
+  showMessage(message: string, type: 'success' | 'error'): void {
+    this.message = message;
+    this.messageType = type;
+    setTimeout(() => {
+      this.message = null;
+      this.messageType = null;
+    }, 3000);
   }
 }
