@@ -26,7 +26,11 @@ router.post('/', verifyToken, async (req, res) => {
     res.status(201).json({ message: 'Entidad creada exitosamente' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error al crear la entidad' });
+    if (error.code === 'ER_NO_REFERENCED_ROW_2') {
+      res.status(400).json({ message: 'Error: El tipo de documento no existe' });
+    } else {
+      res.status(500).json({ message: 'Error al crear la entidad' });
+    }
   }
 });
 

@@ -34,7 +34,8 @@ router.post('/', verifyToken, async (req, res) => {
     await db.query('INSERT INTO tb_tipo_contribuyente (nombre, estado) VALUES (?, ?)', [nombre, estado]);
     res.status(201).json({ message: 'Tipo de contribuyente creado exitosamente' });
   } catch (err) {
-    res.status(500).send('Error on the server.');
+    console.error(err);
+    res.status(500).json({ message: 'Error al crear el tipo de contribuyente' });
   }
 });
 
@@ -45,7 +46,8 @@ router.put('/:id', verifyToken, async (req, res) => {
     await db.query('UPDATE tb_tipo_contribuyente SET nombre = ?, estado = ? WHERE id_tipo_contribuyente = ?', [nombre, estado, id]);
     res.status(200).json({ message: 'Tipo de contribuyente actualizado exitosamente' });
   } catch (err) {
-    res.status(500).send('Error on the server.');
+    console.error(err);
+    res.status(500).json({ message: 'Error al actualizar el tipo de contribuyente' });
   }
 });
 
@@ -55,7 +57,8 @@ router.delete('/:id', verifyToken, async (req, res) => {
     await db.query('DELETE FROM tb_tipo_contribuyente WHERE id_tipo_contribuyente = ?', [id]);
     res.status(200).json({ message: 'Tipo de contribuyente eliminado exitosamente' });
   } catch (err) {
-    res.status(500).send('Error on the server.');
+    console.error(err);
+    res.status(500).json({ message: 'Error al eliminar el tipo de contribuyente' });
   }
 });
 

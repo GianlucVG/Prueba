@@ -14,7 +14,7 @@ import { AlertComponent } from "../../components/alert/alert.component";
     imports: [CommonModule, FormsModule, HeaderComponent, EntityFormComponent, AlertComponent]
 })
 export class EntidadComponent implements OnInit {
-message: string | null = null;
+  message: string | null = null;
   messageType: 'success' | 'error' | null = null;
   
   entidades: any[] = [];
@@ -45,6 +45,7 @@ message: string | null = null;
       },
       error => {
         console.error('Error:', error);
+        this.showMessage('Error al cargar entidades', 'error');
       }
     );
   }
@@ -63,9 +64,11 @@ message: string | null = null;
       () => {
         this.loadEntidades();
         this.resetForm();
+        this.showMessage('Entidad creada exitosamente', 'success');
       },
       error => {
         console.error('Error:', error);
+        this.showMessage(error.error.message || 'Error al crear la entidad', 'error');
       }
     );
   }
@@ -76,9 +79,11 @@ message: string | null = null;
       () => {
         this.loadEntidades();
         this.resetForm();
+        this.showMessage('Entidad actualizada exitosamente', 'success');
       },
       error => {
         console.error('Error:', error);
+        this.showMessage(error.error.message || 'Error al actualizar la entidad', 'error');
       }
     );
   }
@@ -94,9 +99,11 @@ message: string | null = null;
     this.entidadService.delete(id).subscribe(
       () => {
         this.loadEntidades();
+        this.showMessage('Entidad eliminada exitosamente', 'success');
       },
       error => {
         console.error('Error:', error);
+        this.showMessage(error.error.message || 'Error al eliminar la entidad', 'error');
       }
     );
   }
@@ -117,8 +124,12 @@ message: string | null = null;
   }
 
   handleMessage(event: { message: string, type: 'success' | 'error' }): void {
-    this.message = event.message;
-    this.messageType = event.type;
+    this.showMessage(event.message, event.type);
+  }
+
+  showMessage(message: string, type: 'success' | 'error'): void {
+    this.message = message;
+    this.messageType = type;
     setTimeout(() => {
       this.message = null;
       this.messageType = null;

@@ -124,12 +124,7 @@ export class TipoDocumentoComponent implements OnInit {
   }
 
   handleMessage(event: { message: string, type: 'success' | 'error' }): void {
-    this.message = event.message;
-    this.messageType = event.type;
-    setTimeout(() => {
-      this.message = null;
-      this.messageType = null;
-    }, 3000);
+    this.showMessage(event.message, event.type);
   }
 
   showMessage(message: string, type: 'success' | 'error'): void {
